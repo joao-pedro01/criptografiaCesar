@@ -1,4 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from "express";
+import userRoutes from "./userRoutes";
 //import jwt from "jsonwebtoken";
 //import { /*dd,*/ verifyJWT } from "../controllers/functions";
 
@@ -22,5 +23,6 @@ const routes = (app: Application) => {
         express.json(),
         express.urlencoded({ extended: true }),
     );
+    app.use("/api", userRoutes);
 };
 export default routes;
