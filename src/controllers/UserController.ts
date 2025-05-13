@@ -1,15 +1,11 @@
 import { UserService } from "../services/UserService";
-import bcrypt from 'bcrypt';
 
 const userService = new UserService();
 
 export default class UserController {
     static async loginUser(req: any, res: any) {
         const { userName, password } = req.body;
-        try {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            console.log(hashedPassword);
-            
+        try {           
             if(await userService.loginUser(userName, password) != null) {
                 res.status(200).json(true);
             } else {
