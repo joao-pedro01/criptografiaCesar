@@ -1,6 +1,6 @@
 import prisma from "../config/prisma";
 
-export class UserRepository {
+export class CriptografiaRepository {
     findAll() {
         return prisma.criptografia.findMany();
     }

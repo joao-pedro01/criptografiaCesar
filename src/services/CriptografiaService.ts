@@ -1,10 +1,13 @@
-import { CriptografiaRepository } from "../repositories/CriptografiaRepository.ts";
+import { CriptografiaRepository } from "../repositories/CriptografiaRepository";
+import bcrypt from "bcrypt";
 
-export class UserService {
-    private userRepo = new CriptografiaRepository();
+export class CriptografiaService {
+    private criptografiaRepo = new CriptografiaRepository();
 
-    async loginUser(userName: string, senha: string) {
-        const users = await this.userRepo.findUser({ userName: userName, password: senha, isActive: true });
-        return users;
+    async criptografarTexto(texto: string) {
+        const saltRounds = 12;
+        const hash = await bcrypt.hash(texto, saltRounds);
+        console.log(hash.length);
+        
     }
 }
