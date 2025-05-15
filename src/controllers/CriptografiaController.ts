@@ -1,12 +1,12 @@
-import { CriptografiaService } from "../services/CriptografiaService.ts";
+import { CriptografiaService } from "../services/CriptografiaService";
 
 const criptografiaService = new CriptografiaService();
 
 export default class CriptografiaController {
     static async criptografarTexto(req: any, res: any) {
-        const { texto } = req.body;
+        const { texto, deslocamento } = req.body;
         try {
-            const textoCriptografado = await criptografiaService.criptografarTexto(texto);
+            const textoCriptografado = await criptografiaService.criptografarTexto(texto, deslocamento);
             res.status(200).json({ textoCriptografado });
         } catch (error) {
             console.error("Erro ao criptografar texto:", error);
