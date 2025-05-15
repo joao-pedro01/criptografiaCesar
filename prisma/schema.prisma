@@ -25,11 +25,16 @@ model User {
   isActive   Boolean  @default(true)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  Criptografia Criptografia[]
 }
 
 model Criptografia {
   id          Int      @id @default(autoincrement())
+  userId      Int
   isUsed      Boolean  @default(true)
+  hash        String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
 }
