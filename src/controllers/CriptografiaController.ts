@@ -14,14 +14,21 @@ export default class CriptografiaController {
         }
     }
 
-    // static async descriptografarTexto(req: any, res: any) {
-    //     const { textoCriptografado } = req.body;
-    //     try {
-    //         const textoDescriptografado = await criptografiaService.descriptografarTexto(textoCriptografado);
-    //         res.status(200).json({ textoDescriptografado });
-    //     } catch (error) {
-    //         console.error("Erro ao descriptografar texto:", error);
-    //         res.status(500).json({ error: "Erro ao descriptografar texto" });
-    //     }
-    // }
+    static async descriptografarTexto(req: any, res: any) {
+        const { hash } = req.body;
+        try {
+            const textoDescriptografado = await criptografiaService.descriptografarTexto(hash);
+            if (textoDescriptografado === null) {
+                return res.status(404).json({ error: "Hash não encontrado" });
+            }
+            if (textoDescriptografado === false) {
+                return res.status(400).json({ error: "Hash já foi usado" });
+            }
+
+            return res.status(200).json({ textoDescriptografado });
+        } catch (error) {
+            console.error("Erro ao descriptografar texto:", error);
+            res.status(500).json({ error: "Erro ao descriptografar texto" });
+        }
+    }
 }
