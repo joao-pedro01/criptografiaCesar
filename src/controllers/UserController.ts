@@ -9,7 +9,10 @@ export default class UserController {
             if(await userService.loginUser(userName, password) != null) {
                 res.status(200).json(true);
             } else {
-                res.status(401).json(false);
+                res.status(401).json({
+                    message: 'Usuário ou senha inválidos',
+                    erro: false
+                });
             }
         } catch (error) {
             console.error("Erro ao fazer login:", error);

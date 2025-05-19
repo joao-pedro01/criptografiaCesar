@@ -6,11 +6,11 @@ export default class CriptografiaController {
     static async criptografarTexto(req: any, res: any) {
         const { texto, deslocamento } = req.body;
         try {
-            const textoCriptografado = await criptografiaService.criptografarTexto(texto, deslocamento);
-            res.status(200).json({ textoCriptografado });
+            const Hash = await criptografiaService.criptografarTexto(texto, deslocamento);
+            res.status(200).json({ Hash });
         } catch (error) {
             console.error("Erro ao criptografar texto:", error);
-            res.status(500).json({ error: "Erro ao criptografar texto" });
+            res.status(500).json({ message: "Erro ao criptografar texto" });
         }
     }
 
@@ -19,10 +19,10 @@ export default class CriptografiaController {
         try {
             const textoDescriptografado = await criptografiaService.descriptografarTexto(hash);
             if (textoDescriptografado === null) {
-                return res.status(404).json({ error: "Hash não encontrado" });
+                return res.status(404).json({ message: "Hash não encontrado" });
             }
             if (textoDescriptografado === false) {
-                return res.status(400).json({ error: "Hash já foi usado" });
+                return res.status(400).json({ message: "Hash já foi usado" });
             }
 
             return res.status(200).json({ textoDescriptografado });
