@@ -6,8 +6,8 @@ export default class CriptografiaController {
     static async criptografarTexto(req: any, res: any) {
         const { texto, deslocamento } = req.body;
         try {
-            const Hash = await criptografiaService.criptografarTexto(texto, deslocamento);
-            res.status(200).json({ Hash });
+            let resultado = await criptografiaService.criptografarTexto(texto, deslocamento) as { hash: string, resultado: string };
+            res.status(200).json({ Hash: resultado.hash, resultado: resultado.resultado });
         } catch (error) {
             console.error("Erro ao criptografar texto:", error);
             res.status(500).json({ message: "Erro ao criptografar texto" });
@@ -15,9 +15,9 @@ export default class CriptografiaController {
     }
 
     static async descriptografarTexto(req: any, res: any) {
-        const { hash } = req.body;
+        const { hash, mensagem } = req.body;
         try {
-            const textoDescriptografado = await criptografiaService.descriptografarTexto(hash);
+            const textoDescriptografado = await criptografiaService.descriptografarTexto(hash, mensagem);
             if (textoDescriptografado === null) {
                 return res.status(404).json({ message: "Hash não encontrado" });
             }

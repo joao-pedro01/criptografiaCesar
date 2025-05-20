@@ -4,11 +4,10 @@ import bcrypt from "bcrypt";
 export class CriptografiaService {
     private criptografiaRepo = new CriptografiaRepository();
 
-    async criptografarTexto(texto: string, deslocamento: number): Promise<string> {
+    async criptografarTexto(texto: string, deslocamento: number): Promise<object> {
         const saltRounds = 12;
         const hash = await bcrypt.hash(texto, saltRounds);
         const resultado = this.criptografaTexto(texto, deslocamento);
-
         try {
             await this.criptografiaRepo.createHash({
                 hash: hash,
@@ -20,11 +19,11 @@ export class CriptografiaService {
             console.error(error);
         }
 
-        return hash;
+        return {hash, resultado};
     }
 
-    async descriptografarTexto(hash: string) {
-        const registro = await this.criptografiaRepo.findCriptografia({hash: hash});
+    async descriptografarTexto(hash: string, mensagem: string): Promise<string | null | boolean> {
+        const registro = await this.criptografiaRepo.findCriptografia({hash: hash, texto: mensagem});
 
         if(!registro) {
             return null;

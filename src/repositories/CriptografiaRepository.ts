@@ -7,6 +7,7 @@ export class CriptografiaRepository {
     }
     
     findCriptografia(where: object): Promise<Criptografia | null> {
+        console.log("Prisma Query - findFirst where:", where);
         return prisma.criptografia.findFirst({
             where: where,
         });

@@ -19,13 +19,4 @@ export default class UserController {
             res.status(500).json({ error: "Erro ao listar usuários" });
         }
     }
-
-    static async cadastrarUsuario(req: any, res: any) {
-        try {
-            const usuario = await userService.cadastrarUsuario(req.body);
-            res.status(201).json(usuario);
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao cadastrar usuário" });
-        }
-    }
 }
